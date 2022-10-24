@@ -1,9 +1,10 @@
+package org.example;
 
 public class Aula {
 
 	String professor;
 	String turno;
-	String unidade_de_execuçao;
+	String unidade_de_execucao;
 	String dia_semana;
 	//String curso;
 	String hora_inicial;
