@@ -59,4 +59,56 @@ public class Main {
             e.printStackTrace();
         }
     }
+
+    private void adicionar_espacos_a_eventos() {
+        List<Slot> slots = new ArrayList<>();
+
+        for (Slot slot : slots) {
+            List<Evento> aulas_slot = slot.eventos;
+            for (Evento e : aulas_slot) {
+                /*if (aula.sala == null) {
+                    //Alterar para getter
+                    aula.sala = encontrar_sala(aula,slot.salas_livres);
+                }*/
+            }
+        }
+    }
+
+    private List<Sala> salas_match_caracteristica(String caracteristica, List<Sala> salas_livres) {
+        List<Sala> salas = new ArrayList<>();
+        for (Sala s : salas_livres) {
+            if (s.getCaracteristicas().contains(caracteristica)) salas.add(s);
+        }
+        return salas;
+    }
+
+    //Uma sala tem um evento. Não uma aula. Um evento pode ser exame ou aula
+    private Sala encontrar_sala(Aula aula, List<Sala> salas_livres) {
+        String caracteristica_aula = aula.caracteristica;
+        List<Sala> salas_livres_com_caracteristica = salas_match_caracteristica(caracteristica_aula, salas_livres);
+
+        if (!salas_livres_com_caracteristica.isEmpty()) {
+            int diferenca = 0; //diferenca entre capacidade da sala e numero de inscritos
+            Sala sala_to_return = null;
+
+            for (Sala s : salas_livres_com_caracteristica) {
+                int temp_dif = s.getCapacidade_normal() - aula.turno.inscritos;
+                if (temp_dif >= 0 && temp_dif < diferenca) {
+                    diferenca = temp_dif;
+                    sala_to_return = s;
+                }
+            }
+            if (sala_to_return != null) return sala_to_return;
+            else {
+                System.out.println("Sobrelotação");
+                resolver_conflito();
+            }
+        }
+        resolver_conflito();
+        return null;
+    }
+
+    private void resolver_conflito() {
+
+    }
 }

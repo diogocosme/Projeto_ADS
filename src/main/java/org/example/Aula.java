@@ -1,9 +1,11 @@
 package org.example;
 
-public class Aula {
+import java.util.Date;
+
+public class Aula extends Evento{
 
 	String professor;
-	String turno;
+	Turno turno;
 	String unidade_de_execucao;
 	String dia_semana;
 	//String curso;
@@ -12,10 +14,9 @@ public class Aula {
 	//int inscritos;
 	Sala sala;
 	String caracteristica;
-	
-	
-	
-	
-	
-	
+
+
+	public Aula(Date data, Date data_final, int numero_de_alunos, String[] cursos, String unidade, String hora_inicio, String hora_fim) {
+		super(data, data_final, numero_de_alunos, cursos, unidade, hora_inicio, hora_fim);
+	}
 }
