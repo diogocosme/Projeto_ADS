@@ -1,1 +1,10 @@
 Como associamos um professor a uma aula?
+
+Associar salas a aulas:
+    -Se não houver uma sala disponivel com determinada caracteristica damos outra sala random das
+    disponiveis onde cabem todos? Ou temos de ter atencao ainda às caracteristicas da sala?
+    (Ex: Temos de ter atencao para nao dar um laboratorio de arquitetura a uma aula que era suposto
+    ser num laboratorio de informatica).
+
+Associar salas a avaliacoes:
+    -Qd uma sala não é suficiente, temos de ter em conta as distancias das salas?

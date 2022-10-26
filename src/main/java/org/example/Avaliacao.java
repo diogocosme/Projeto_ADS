@@ -12,6 +12,7 @@ public class Avaliacao extends Evento {
     private String periodo_inscricao;
     private List<Sala> salas;
     private String estado_pedido_sala;
+
     private int capacidade_salas;
 
 
@@ -23,11 +24,25 @@ public class Avaliacao extends Evento {
         this.tipo = line[3];
         this.epoca = line[4];
         this.nome = line[5];
-        if (line[6].equals("Não")) this.requer_inscricao_previa=false;
-        else this.requer_inscricao_previa = true;
+        this.requer_inscricao_previa= !line[6].equals("Não");
         this.periodo_inscricao = line[7];
         this.estado_pedido_sala = line[10];
     }
 
 
+    public void setSalas(List<Sala> salas) {
+        this.salas = salas;
+    }
+
+    public String getEstado_pedido_sala() {
+        return estado_pedido_sala;
+    }
+
+    public int getCapacidade_salas() {
+        return capacidade_salas;
+    }
+
+    public void setCapacidade_salas(int capacidade_salas) {
+        this.capacidade_salas = capacidade_salas;
+    }
 }

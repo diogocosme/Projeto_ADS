@@ -25,4 +25,8 @@ public abstract class Evento {
         this.hora_inicio = hora_inicio;
         this.hora_fim = hora_fim;
     }
+
+    public int getNumero_de_alunos() {
+        return numero_de_alunos;
+    }
 }
