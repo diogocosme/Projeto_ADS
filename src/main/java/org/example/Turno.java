@@ -8,6 +8,7 @@ public class Turno {
 	List<String> cursos;
 	String unidades_execucao;
 	int inscritos;
+	String turno;
 	
 	
 	

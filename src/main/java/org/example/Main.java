@@ -3,12 +3,14 @@ package org.example;
 import com.opencsv.CSVReader;
 
 import java.io.FileReader;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Main {
     private final String file_caracterizacao_das_salas = "ADS - Caracterizacao das salas.csv";
-    private final String file_horario_1sem = "ADS - Horários 1º sem 2022-23.csv";
+    private final String file_horario_1sem = "2- ADS - Horários 1º sem 2022-23.csv";
     private List<Sala> salas = new ArrayList<>();
 
     public static void main(String[] args) {
@@ -30,7 +32,8 @@ public class Main {
     }
 
     private void start() {
-        readFile_caracterizacaoDasSalas();
+    	readFile_caracterizacaoDasSalas();
+    	readFile_slots();
     }
 
     private void readFile_caracterizacaoDasSalas() {
@@ -47,11 +50,14 @@ public class Main {
             // we are going to read data line by line
             while ((nextRecord = csvReader.readNext()) != null) {
                 if (first_line) {
+                	
                     columns = nextRecord[0].split(";");
                     first_line = false;
                 } else {
+                	
                     String[] line = nextRecord[0].split(";");
                     List<String> caracteristicas = new ArrayList<>();
+                    
 
                     int num_caracteristicas = Integer.parseInt(line[4]);
                     for (int i = 5; i < line.length; i++) {
@@ -165,4 +171,76 @@ public class Main {
     private void resolver_conflito() {
 
     }
+    
+    
+    private void readFile_slots() {
+		List<Slot> slots = new ArrayList<>();
+		try {
+
+			FileReader filereader = new FileReader(file_horario_1sem);
+
+			try (CSVReader csvReader = new CSVReader(filereader)) {
+				String[] nextRecord;
+				
+				
+				List<Sala> salas_livres = salas;
+				
+				boolean first_line = true;
+				
+
+				// we are going to read data line by line
+				
+				while ((nextRecord = csvReader.readNext()) != null) {
+					if (first_line) {
+						first_line = false;
+						
+					} else {
+						String[] line = nextRecord;
+						if(line[0].isEmpty()) {
+							break;
+						}
+						
+						String unidade_de_execucao = line[1];
+						String[] cursos = line[0].split(","); 
+						
+						String hora_inicial = line[8];
+						String hora_final = line[9];
+
+						Date date = null;
+						if(!line[10].isEmpty()) {
+						date = new SimpleDateFormat("dd-MM-yyyy").parse(line[10]);}
+						
+						
+						Evento evento = new Aula(date, date, Integer.parseInt(line[4]), cursos, unidade_de_execucao,
+								hora_inicial, hora_final);
+
+						
+						List<Evento> eventos = new ArrayList<>();
+						eventos.add(evento);
+
+						Slot new_slot = new Slot(line[10], line[8], line[9], eventos, salas_livres);
+
+						boolean duplicate = false;
+
+						for (Slot s : slots) {
+							if (s.data.equals(new_slot.data) && s.hora_inicio.equals(new_slot.hora_inicio)
+									&& s.hora_final.equals(new_slot.hora_final)) {
+								s.eventos.add(evento);
+								duplicate = true;
+							}
+						}
+						if (!duplicate) {
+							slots.add(new_slot);
+						}
+					}
+				}
+			}
+			for (Slot s: slots) {
+				System.out.println(s.toString());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 }

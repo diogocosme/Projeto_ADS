@@ -1,5 +1,6 @@
 package org.example;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -29,4 +30,11 @@ public abstract class Evento {
     public int getNumero_de_alunos() {
         return numero_de_alunos;
     }
+
+	@Override
+	public String toString() {
+		return "Evento [data=" + data + ", data_final=" + data_final + ", numero_de_alunos=" + numero_de_alunos
+				+ ", cursos=" + Arrays.toString(cursos) + ", unidade=" + unidade + ", hora_inicio=" + hora_inicio
+				+ ", hora_fim=" + hora_fim + "]";
+	}
 }
