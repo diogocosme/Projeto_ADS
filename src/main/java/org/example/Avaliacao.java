@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 public class Avaliacao extends Evento {
-    private int codigo;
+    private String codigo;
     private String tipo;
     private String epoca;
     private String nome;
@@ -20,7 +20,7 @@ public class Avaliacao extends Evento {
                      String[] cursos, String unidade,
                      String hora_inicio, String hora_fim, String[] line) {
         super(data, data_final, numero_de_alunos, cursos, unidade, hora_inicio, hora_fim);
-        this.codigo = Integer.parseInt(line[0]);
+        this.codigo = line[0];
         this.tipo = line[3];
         this.epoca = line[4];
         this.nome = line[5];
